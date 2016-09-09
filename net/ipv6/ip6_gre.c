@@ -468,7 +468,7 @@ static int gre_rcv(struct sk_buff *skb)
 	bool csum_err = false;
 	int hdr_len;
 
-	hdr_len = gre_parse_header(skb, &tpi, &csum_err, htons(ETH_P_IPV6));
+	hdr_len = gre_parse_header(skb, &tpi, &csum_err, htons(ETH_P_IPV6), 0);
 	if (hdr_len < 0)
 		goto drop;
 
@@ -518,8 +518,6 @@ static netdev_tx_t __gre6_xmit(struct sk_buff *skb,
 	/* Push GRE header. */
 	gre_build_header(skb, tunnel->tun_hlen, tunnel->parms.o_flags,
 			 protocol, tunnel->parms.o_key, htonl(tunnel->o_seqno));
-
-	skb_set_inner_protocol(skb, protocol);
 
 	return ip6_tnl_xmit(skb, dev, dsfield, fl6, encap_limit, pmtu,
 			    NEXTHDR_GRE);

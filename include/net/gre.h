@@ -26,7 +26,7 @@ int gre_del_protocol(const struct gre_protocol *proto, u8 version);
 struct net_device *gretap_fb_dev_create(struct net *net, const char *name,
 				       u8 name_assign_type);
 int gre_parse_header(struct sk_buff *skb, struct tnl_ptk_info *tpi,
-		     bool *csum_err, __be16 proto);
+		     bool *csum_err, __be16 proto, int nhs);
 
 static inline int gre_calc_hlen(__be16 o_flags)
 {
@@ -104,6 +104,7 @@ static inline void gre_build_header(struct sk_buff *skb, int hdr_len,
 
 	skb_push(skb, hdr_len);
 
+	skb_set_inner_protocol(skb, proto);
 	skb_reset_transport_header(skb);
 	greh = (struct gre_base_hdr *)skb->data;
 	greh->flags = gre_tnl_flags_to_gre_flags(flags);

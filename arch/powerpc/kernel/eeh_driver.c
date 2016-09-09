@@ -139,7 +139,7 @@ static void eeh_enable_irq(struct pci_dev *dev)
 		 * into it.
 		 *
 		 * That's just wrong.The warning in the core code is
-		 * there to tell people to fix their assymetries in
+		 * there to tell people to fix their asymmetries in
 		 * their own code, not by abusing the core information
 		 * to avoid it.
 		 *
@@ -647,7 +647,7 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
 			pci_unlock_rescan_remove();
 		}
 	} else if (frozen_bus) {
-		eeh_pe_dev_traverse(pe, eeh_rmv_device, &rmv_data);
+		eeh_pe_dev_traverse(pe, eeh_rmv_device, rmv_data);
 	}
 
 	/*
